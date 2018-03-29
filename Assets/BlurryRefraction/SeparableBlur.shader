@@ -1,5 +1,5 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// 可分离的玻璃模糊。Hidden：不在面板中直接显示，但可以动态查找到。
 Shader "Hidden/SeparableGlassBlur" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "" {}
@@ -57,6 +57,7 @@ Subshader {
 	  Fog { Mode off }
 
       CGPROGRAM
+	  // 意思好像是：段函数计算使用最快速的方法。（精度最低）
       #pragma fragmentoption ARB_precision_hint_fastest
       #pragma vertex vert
       #pragma fragment frag
