@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 3498d49fd25684619a514ef5c7a69cf4
+timeCreated: 1423319133
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - videoBloomShader: {fileID: 4800000, guid: 3db31916d1e4c4510a99e7c5e5e3a285, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
