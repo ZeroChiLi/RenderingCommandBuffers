@@ -27,7 +27,7 @@ Material:
         m_Scale: {x: 2, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpAmt: 19
+    - _BumpAmt: 64
     - _Shininess: 0.078125
     - _TintAmt: 0.22
     m_Colors:
