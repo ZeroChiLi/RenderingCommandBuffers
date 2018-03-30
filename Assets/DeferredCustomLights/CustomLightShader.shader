@@ -1,7 +1,4 @@
-﻿// Upgrade NOTE: replaced '_CameraToWorld' with 'unity_CameraToWorld'
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+﻿
 Shader "CustomLights/PointArea" {
 SubShader {
 	Tags { "Queue"="Transparent-1" }
@@ -159,6 +156,7 @@ half4 CalculateLight (unity_v2f_deferred i)
 }
 ENDCG
 
+// 绘制光照
 Pass {
 	Fog { Mode Off }
 	ZWrite Off
@@ -190,6 +188,7 @@ Pass {
 	ENDCG
 }
 
+// 绘制灯泡
 Pass {
 	Fog { Mode Off }
 	ZWrite Off
@@ -199,7 +198,8 @@ Pass {
 	#pragma target 3.0
 	#pragma vertex vert
 	#pragma fragment frag
-	#pragma exclude_renderers nomrt
+	// 不使用nomrt渲染器编译？
+	#pragma exclude_renderers nomrt			
 
 	float4 vert (float4 vertex : POSITION) : SV_POSITION
 	{

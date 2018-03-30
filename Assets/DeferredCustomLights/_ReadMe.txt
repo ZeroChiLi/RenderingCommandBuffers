@@ -26,3 +26,22 @@ cameras too, but is not an ideal setup for a proper custom light system.
 Caveats: for simplicity reasons, the example code does a not-too-efficient
 rendering of light shapes. Would be more efficient to use stencil marking as in typical
 deferred shading; here we just render the sphere backfaces with depth testing off.
+
+
+这个场景展示了“自定义延迟光照”的实现。即使用命令缓冲可以实现延迟渲染的自定义光照。
+
+原理：在常规光照Pass完成后，给所有自定义光照，绘制一个球型，还有计算光照的shader，并添加到光照缓冲中。
+
+注意：这只是个小样例代码，并不是完整的自定义光照系统。
+
+在这个样例中，自定义关照都带着 CustomLight.cs 脚本。有两种自定义光照：
+ - 球型：类似点光源，但是他是有区域光大小的（即球体里面光照满值）。
+ - 管型（长方体）：包括X长度，和Size半径。
+
+实现光照计算的shader：CustomLightShader.shader，使用了“最近点”取近似值。
+
+CustomLightRenderer.cs：自定义光照渲染器，建议放在总是存在可见的对象中。他会添加命令缓冲到所有相机。
+同样包括场景视图的相机，但并非一个理想的自定义光照系统。
+
+警告：为了简单，这个样例代码在渲染灯光形状时，就不是太效率了。如果想要更高效，使用模版标记在典型延迟渲染，
+可以在渲染球形背面，关闭深度测试。

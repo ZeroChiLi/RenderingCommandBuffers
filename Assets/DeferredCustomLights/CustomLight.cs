@@ -15,6 +15,7 @@ public class CustomLight : MonoBehaviour
 	public float m_Range = 10.0f;
 	public float m_Size = 0.5f;
 	public float m_TubeLength = 1.0f;
+    public bool m_DrawShape = true;
 
 	public void OnEnable()
 	{
