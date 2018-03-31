@@ -170,7 +170,8 @@ Pass {
 	#pragma vertex vert
 	#pragma fragment frag
 	#pragma exclude_renderers nomrt
-
+	
+	// unity_v2f_deferred ：见 CGIncludes/UnityDeferredLibrary.cginc。
 	unity_v2f_deferred vert (float4 vertex : POSITION)
 	{
 		unity_v2f_deferred o;
