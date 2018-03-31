@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Range: 10
   m_Size: 0.5
   m_TubeLength: 1
-  m_DrawShape: 1
+  m_ShapeAlpha: 0.5
 --- !u!4 &47844818
 Transform:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Range: 10
   m_Size: 0.2
   m_TubeLength: 3
-  m_DrawShape: 1
+  m_ShapeAlpha: 0.119
 --- !u!4 &733533184
 Transform:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_Range: 10
   m_Size: 0.5
   m_TubeLength: 1
-  m_DrawShape: 1
+  m_ShapeAlpha: 0.5
 --- !u!1 &902651917
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_Range: 5
   m_Size: 0.1
   m_TubeLength: 2
-  m_DrawShape: 1
+  m_ShapeAlpha: 0.5
 --- !u!4 &1272593668
 Transform:
   m_ObjectHideFlags: 0
@@ -1385,7 +1385,7 @@ MonoBehaviour:
   m_Range: 5
   m_Size: 0.1
   m_TubeLength: 1
-  m_DrawShape: 1
+  m_ShapeAlpha: 0.384
 --- !u!4 &1721606440
 Transform:
   m_ObjectHideFlags: 0
@@ -1393,7 +1393,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1721606438}
   m_LocalRotation: {x: 0.117725596, y: -0.41595, z: -0.19447164, w: 0.8805153}
-  m_LocalPosition: {x: -0.34, y: 1.07, z: -8.04}
+  m_LocalPosition: {x: -2.39, y: 1.06, z: -7.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 542036208}
@@ -1433,7 +1433,7 @@ MonoBehaviour:
   m_Range: 10
   m_Size: 0.5
   m_TubeLength: 1
-  m_DrawShape: 1
+  m_ShapeAlpha: 0.5
 --- !u!4 &1874021434
 Transform:
   m_ObjectHideFlags: 0

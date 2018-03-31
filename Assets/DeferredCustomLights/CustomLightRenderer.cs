@@ -112,6 +112,7 @@ public class CustomLightRenderer : MonoBehaviour
 
 		var propParams = Shader.PropertyToID("_CustomLightParams");
 		var propColor = Shader.PropertyToID("_CustomLightColor");
+        var propShapeAlpha = Shader.PropertyToID("_CustomShapeAlpha");
 		Vector4 param = Vector4.zero;
 		Matrix4x4 trs = Matrix4x4.identity;
 
@@ -139,10 +140,8 @@ public class CustomLightRenderer : MonoBehaviour
         // 绘制光照形状
 		foreach (var o in system.m_Lights)
 		{
-            if (!o.m_DrawShape)
-                continue;
-
 			buf.m_BeforeAlpha.SetGlobalColor (propColor, o.GetLinearColor());
+            buf.m_BeforeAlpha.SetGlobalFloat(propShapeAlpha, o.m_ShapeAlpha);
 
 			if (o.m_Kind == CustomLight.Kind.Sphere)
 			{

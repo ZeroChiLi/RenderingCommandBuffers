@@ -23,6 +23,7 @@ float4 _CustomLightParams;
 #define _CustomLightInvSqRadius _CustomLightParams.z
 #define _CustomLightKind _CustomLightParams.w
 
+float _CustomShapeAlpha;
 
 sampler2D _CameraGBufferTexture0;
 sampler2D _CameraGBufferTexture1;
@@ -191,8 +192,9 @@ Pass {
 // 绘制灯泡
 Pass {
 	Fog { Mode Off }
-	ZWrite Off
-	Blend One One
+	//ZWrite Off	// 开启深度写入
+	Cull Off	// 渲染双面
+	Blend SrcAlpha OneMinusSrcAlpha 
 
 	CGPROGRAM
 	#pragma target 3.0
@@ -208,7 +210,7 @@ Pass {
 
 	half4 frag () : SV_Target
 	{
-		return half4(_CustomLightColor.rgb, 1);
+		return half4(_CustomLightColor.rgb, _CustomShapeAlpha);
 	}
 	ENDCG
 }
