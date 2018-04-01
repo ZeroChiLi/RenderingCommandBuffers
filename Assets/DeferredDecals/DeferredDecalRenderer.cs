@@ -47,12 +47,8 @@ public class DeferredDecalRenderer : MonoBehaviour
 	public void OnDisable()
 	{
 		foreach (var cam in m_Cameras)
-		{
 			if (cam.Key)
-			{
 				cam.Key.RemoveCommandBuffer (CameraEvent.BeforeLighting, cam.Value);
-			}
-		}
 	}
 
 	public void OnWillRenderObject()
@@ -71,49 +67,48 @@ public class DeferredDecalRenderer : MonoBehaviour
 		CommandBuffer buf = null;
 		if (m_Cameras.ContainsKey(cam))
 		{
-			buf = m_Cameras[cam];
-			buf.Clear ();
-		}
+            buf = m_Cameras[cam];
+            buf.Clear();
+        }
 		else
 		{
 			buf = new CommandBuffer();
 			buf.name = "Deferred decals";
 			m_Cameras[cam] = buf;
 
-			// set this command buffer to be executed just before deferred lighting pass
-			// in the camera
+			// 在延迟渲染的光照前添加这个缓冲
 			cam.AddCommandBuffer (CameraEvent.BeforeLighting, buf);
 		}
 
-		//@TODO: in a real system should cull decals, and possibly only
-		// recreate the command buffer when something has changed.
+        //@TODO: in a real system should cull decals, and possibly only
+        // recreate the command buffer when something has changed.
+        // 需要做的：在真实系统中，应该对贴花进行剔除，在一些变换出现时，需要重新创建命令缓冲
 
-		var system = DeferredDecalSystem.instance;
+        var system = DeferredDecalSystem.instance;
 
-		// copy g-buffer normals into a temporary RT
 		var normalsID = Shader.PropertyToID("_NormalsCopy");
 		buf.GetTemporaryRT (normalsID, -1, -1);
-		buf.Blit (BuiltinRenderTextureType.GBuffer2, normalsID);
-		// render diffuse-only decals into diffuse channel
-		buf.SetRenderTarget (BuiltinRenderTextureType.GBuffer0, BuiltinRenderTextureType.CameraTarget);
+
+        // BuiltinRenderTextureType.GBuffer2 ：g-buffer的法线纹理
+        buf.Blit (BuiltinRenderTextureType.GBuffer2, normalsID);
+
+        // 渲染漫反射纹理到漫反射通道
+        buf.SetRenderTarget (BuiltinRenderTextureType.GBuffer0, BuiltinRenderTextureType.CameraTarget);
 		foreach (var decal in system.m_DecalsDiffuse)
-		{
 			buf.DrawMesh (m_CubeMesh, decal.transform.localToWorldMatrix, decal.m_Material);
-		}
-		// render normals-only decals into normals channel
+
+		// 渲染法线纹理到法线纹理通道
 		buf.SetRenderTarget (BuiltinRenderTextureType.GBuffer2, BuiltinRenderTextureType.CameraTarget);
 		foreach (var decal in system.m_DecalsNormals)
-		{
 			buf.DrawMesh (m_CubeMesh, decal.transform.localToWorldMatrix, decal.m_Material);
-		}
-		// render diffuse+normals decals into two MRTs
+
+		// 渲染漫反射+法线纹理
 		RenderTargetIdentifier[] mrt = {BuiltinRenderTextureType.GBuffer0, BuiltinRenderTextureType.GBuffer2};
 		buf.SetRenderTarget (mrt, BuiltinRenderTextureType.CameraTarget);
 		foreach (var decal in system.m_DecalsBoth)
-		{
 			buf.DrawMesh (m_CubeMesh, decal.transform.localToWorldMatrix, decal.m_Material);
-		}
-		// release temporary normals RT
+
+		// 释放临时法线纹理
 		buf.ReleaseTemporaryRT (normalsID);
 	}
 }

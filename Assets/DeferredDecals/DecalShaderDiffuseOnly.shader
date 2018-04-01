@@ -1,9 +1,4 @@
-﻿// Upgrade NOTE: commented out 'float4x4 _CameraToWorld', a built-in variable
-// Upgrade NOTE: replaced '_CameraToWorld' with 'unity_CameraToWorld'
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+﻿
 // http://www.popekim.com/2012/10/siggraph-2012-screen-space-decals-in.html
 
 Shader "Decal/DecalShader"
@@ -48,26 +43,14 @@ Shader "Decal/DecalShader"
 				return o;
 			}
 
-			CBUFFER_START(UnityPerCamera2)
-			// float4x4 _CameraToWorld;
-			CBUFFER_END
-
 			sampler2D _MainTex;
 			sampler2D_float _CameraDepthTexture;
 			sampler2D _NormalsCopy;
 
-			//void frag(
-			//	v2f i,
-			//	out half4 outDiffuse : COLOR0,			// RT0: diffuse color (rgb), --unused-- (a)
-			//	out half4 outSpecRoughness : COLOR1,	// RT1: spec color (rgb), roughness (a)
-			//	out half4 outNormal : COLOR2,			// RT2: normal (rgb), --unused-- (a)
-			//	out half4 outEmission : COLOR3			// RT3: emission (rgb), --unused-- (a)
-			//)
 			fixed4 frag(v2f i) : SV_Target
 			{
-				i.ray = i.ray * (_ProjectionParams.z / i.ray.z);
+				i.ray = i.ray * (_ProjectionParams.z / i.ray.z);	// _ProjectionParams.z 是相机到远裁切面的距离的倒数
 				float2 uv = i.screenUV.xy / i.screenUV.w;
-				// read depth and reconstruct world position
 				float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv);
 				depth = Linear01Depth (depth);
 				float4 vpos = float4(i.ray * depth,1);
@@ -79,6 +62,7 @@ Shader "Decal/DecalShader"
 
 				i.uv = opos.xz+0.5;
 
+				// 将正对方向角度偏差小的剔除掉：类似在楼梯，垂直投影下来，楼梯的竖直面不会显示投影效果。
 				half3 normal = tex2D(_NormalsCopy, uv).rgb;
 				fixed3 wnormal = normal.rgb * 2.0 - 1.0;
 				clip (dot(wnormal, i.orientation) - 0.3);
