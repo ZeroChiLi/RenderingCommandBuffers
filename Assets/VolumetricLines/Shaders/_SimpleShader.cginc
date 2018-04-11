@@ -27,13 +27,13 @@
 		v2f o;
 		o.uv = v.texcoord;
 		
-#if UNITY_VERSION >= 540
+//#if UNITY_VERSION >= 540
+//		float4 clipPos = UnityObjectToClipPos(v.vertex);
+//		float4 clipPos_other = UnityObjectToClipPos(float4(v.otherPos, 1.0));
+//#else
 		float4 clipPos = UnityObjectToClipPos(v.vertex);
 		float4 clipPos_other = UnityObjectToClipPos(float4(v.otherPos, 1.0));
-#else
-		float4 clipPos = UnityObjectToClipPos(v.vertex);
-		float4 clipPos_other = UnityObjectToClipPos(float4(v.otherPos, 1.0));
-#endif
+//#endif
 
 		float aspectRatio = _ScreenParams.x / _ScreenParams.y;
 		float invAspectRatio = _ScreenParams.y / _ScreenParams.x;
@@ -80,13 +80,7 @@
 #ifdef VOL_LINE_SHDMODE_FAST
 		return tx;
 #else
-		return
-			tx.a > _LightSaberFactor
-			?
-			fixed4(1.0, 1.0, 1.0, tx.a)
-			:
-			tx * _Color
-		;
+		return tx.a > _LightSaberFactor ? fixed4(1.0, 1.0, 1.0, tx.a) : tx * _Color;
 #endif
 	}
 	

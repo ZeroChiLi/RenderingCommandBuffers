@@ -44,52 +44,30 @@ namespace VolumetricLines
 		public Material m_templateMaterial;
 
 		/// <summary>
+        /// 不覆盖临时材质属性
+        /// True：只在初始化中改变属性
+        /// False：可以知道脚本中修改材质属性
 		/// Set to false in order to change the material's properties as specified in this script.
 		/// Set to true in order to *initially* leave the material's properties as they are in the template material.
 		/// </summary>
 		[SerializeField] 
 		private bool m_doNotOverwriteTemplateMaterialProperties;
 
-		/// <summary>
-		/// The start position relative to the GameObject's origin
-		/// </summary>
-		[SerializeField] 
-		private Vector3 m_startPos;
-		
-		/// <summary>
-		/// The end position relative to the GameObject's origin
-		/// </summary>
-		[SerializeField] 
-		private Vector3 m_endPos = new Vector3(0f, 0f, 100f);
-
-		/// <summary>
-		/// Line Color
-		/// </summary>
-		[SerializeField] 
-		private Color m_lineColor;
-
-		/// <summary>
-		/// The width of the line
-		/// </summary>
-		[SerializeField] 
-		private float m_lineWidth;
+		[SerializeField] private Vector3 m_startPos;    // 起始位置
+        [SerializeField] private Vector3 m_endPos = new Vector3(0f, 0f, 100f);  // 结束位置
+        [SerializeField] private Color m_lineColor;     // 颜色
+		[SerializeField] private float m_lineWidth;     // 宽度
 
 		/// <summary>
 		/// Light saber factor
+        /// 光照的saber因子？
 		/// </summary>
 		[SerializeField]
 		[Range(0.0f, 1.0f)]
 		private float m_lightSaberFactor;
 
-		/// <summary>
-		/// This GameObject's specific material
-		/// </summary>
-		private Material m_material;
-		
-		/// <summary>
-		/// This GameObject's mesh filter
-		/// </summary>
-		private MeshFilter m_meshFilter;
+		private Material m_material;        // 该对象的材质
+		private MeshFilter m_meshFilter;    // 该对象的网格过滤器
 		#endregion
 
 		#region properties
